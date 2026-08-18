@@ -1,0 +1,67 @@
+.caveat-cyrillic-cursive {
+    font-family: "Caveat", cursive;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+}
+
+* {
+    font-family: "Caveat", cursive;
+    user-select: none
+}
+
+.bg-orange {
+    background-color: #b13000 !important;
+    color: #ffcfcf !important;
+}
+
+br {
+    border-top: 1px solix grey
+}
+
+.envelope {
+    --width: 51.0px;
+    --height: 43px;
+    --left: 0px;
+    --top: 6.3px;
+    --gap-x: -101.7px;
+    --gap-y: 155.3px;
+
+    width: var(--width);
+    height: var(--height);
+    background-image: url("/envelopes.png");
+    background-position: calc(var(--envelope) * (var(--width) + var(--gap-x)) + var(--left)) calc(var(--category) * (var(--height) + var(--gap-y)) + var(--top));
+    background-size: 30em;
+
+    transition: transform 0.1s;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.jiggle {
+    transform: rotate(30deg)
+}
+
+.shake {
+    animation: horizontal-shaking 0.5s ease-in;
+}
+
+@keyframes horizontal-shaking {
+    0% {
+        transform: translateX(0)
+    }
+    25% {
+        transform: translateX(5px)
+    }
+    50% {
+        transform: translateX(-5px)
+    }
+    75% {
+        transform: translateX(5px)
+    }
+    100% {
+        transform: translateX(0)
+    }
+}
