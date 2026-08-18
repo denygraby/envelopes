@@ -29,7 +29,7 @@ br {
 
     width: var(--width);
     height: var(--height);
-    background-image: url("/envelopes.png");
+    background-image: url("/envelopes/envelopes.png");
     background-position: calc(var(--envelope) * (var(--width) + var(--gap-x)) + var(--left)) calc(var(--category) * (var(--height) + var(--gap-y)) + var(--top));
     background-size: 30em;
 
