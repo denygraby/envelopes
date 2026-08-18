@@ -41,9 +41,8 @@
             <template v-for="(envelope, envelopeIndex) of category.envelopes">
                 <div
                     class="d-inline-block envelope cursor-pointer"
-                    @mousedown="$event.target.classList.add('jiggle')"
-                    @mouseup="$event.target.classList.remove('jiggle')"
-                    @mouseleave="$event.target.classList.remove('jiggle')"
+                    @touchstart="$event.target.classList.add('jiggle')"
+                    @touchend="$event.target.classList.remove('jiggle')"
                     @click="open(category, envelopeIndex)"
                     :style="getStyle(category, categoryIndex, envelopeIndex)"></div>
             </template>
