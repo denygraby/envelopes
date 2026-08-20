@@ -80,7 +80,7 @@ Vue.createApp({
         blockedForToday() {
             for (const category of Object.values(this.openedEnvelopes)) {
                 for (const openedAt of Object.values(category)) {
-                    if (Date.now() - openedAt < 1000 * 60 * 60 * 24) {
+                    if (Date.now() - openedAt < 1000 * 60 * 60 * 12) {
                         return true;
                     }
                 }
