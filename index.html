@@ -21,9 +21,8 @@
         }
     </style>
 </head>
-<body class="bg-orange" v-cloak>
-
-<div class="container-fluid">
+<body class="bg-orange" >
+<div class="container-fluid" id="app" v-cloak>
     <div class="mt-5">
         <h4 class="text-center">Можешь открывать по одному конверту в день</h4>
         <h5 class="text-center invisible" style="color: rgb(185, 177, 255)" ref="notification">Сегодня ты уже открыла
@@ -37,24 +36,53 @@
             <h5 class="col-auto mx-2 pb-1" style="opacity: 50%">{{category.title}}</h5>
             <div class="col border-top" style="opacity: 50%"></div>
         </div>
-        <div class="text-center">
+        <div class="text-center" :style="`--category-index: ${categoryIndex}; --category-envelopes-total: ${category.envelopes.length + 1}`">
             <template v-for="(envelope, envelopeIndex) of category.envelopes">
                 <div
                     class="d-inline-block envelope cursor-pointer"
+                    :class="isOpened(category, envelopeIndex) ? 'opened' : 'closed'"
+
                     @touchstart="$event.target.classList.add('jiggle')"
                     @touchend="$event.target.classList.remove('jiggle')"
                     @click="open(category, envelopeIndex)"
-                    :style="getStyle(category, categoryIndex, envelopeIndex)"></div>
+
+                    :style="`--envelope-index: ${envelopeIndex}`"></div>
             </template>
+        </div>
+    </div>
+    <div class="mt-5 pt-5 text-center" v-if="allOpened">
+        <div
+                class="d-inline-block main-envelope cursor-pointer"
+
+                :class="mainOpened ? 'opened' : 'closed'"
+                @touchstart="$event.target.classList.add('jiggle')"
+                @touchend="$event.target.classList.remove('jiggle')"
+
+                style="--jiggle-max: 0"></div>
+    </div>
+
+    <div class="modal fade" ref="modal">
+        <div class="modal-dialog mt-5">
+            <div class="modal-content">
+                <div class="modal-body" style="background-color: #141225">
+                    {{selectedEnvelope}}
+                </div>
+                <div class="modal-footer py-0" style="background-color: #141225">
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Закрыть</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
-<div class="modal fade" ref="modal">
+
+<div class="modal fade" id="main-envelope-modal">
     <div class="modal-dialog mt-5">
         <div class="modal-content">
             <div class="modal-body" style="background-color: #141225">
-                {{selectedEnvelope}}
+                ты самая лучшая, самая классная, самая красивая, самая веселая, самая прикольная,
+                самая офигенная, самая ахуенная, самая сексуальная, самая четкая, самая милая, самая любимая, самая
+                яркая, самая самая самая девушка в мире!!! я тебя ооооочень люблю!!!
             </div>
             <div class="modal-footer py-0" style="background-color: #141225">
                 <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Закрыть</button>

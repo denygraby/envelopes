@@ -17,17 +17,33 @@
     color: #ffcfcf !important;
 }
 
+body:has(.main-envelope.opened) {
+    --left: 0px;
+    --top: 0px;
+    --scale: 21em;
+    background-image: url("/envelopes/confetti.gif");
+    background-size: var(--scale);
+}
+
 br {
     border-top: 1px solix grey
 }
 
 .envelope {
+    --envelope: var(--envelope-index);
+    &.opened {
+        --envelope: var(--category-envelopes-total);
+    }
+    --category: var(--category-index);
+
     --width: 51.0px;
     --height: 43px;
     --left: 0px;
     --top: 6.3px;
     --gap-x: -101.7px;
     --gap-y: 155.3px;
+
+    --jiggle-max: 30;
 
     width: var(--width);
     height: var(--height);
@@ -38,12 +54,37 @@ br {
     transition: transform 0.1s;
 }
 
+.main-envelope {
+    &.opened {
+        --width: 84px;
+        --height: 58px;
+        --right: -110px;
+        --top: -171px;
+    }
+    &.closed {
+        --width: 104px;
+        --height: 51px;
+        --right: -7px;
+        --top: -176px;
+    }
+
+    width: var(--width);
+    height: var(--height);
+
+    background-image: url("/envelopes/envelopes.png");
+    background-position: var(--right) var(--top);
+    background-size: 30em;
+
+    transition: transform 0.1s;
+    scale: 2;
+}
+
 .cursor-pointer {
     cursor: pointer;
 }
 
 .jiggle {
-    transform: rotate(30deg)
+    transform: rotate(calc(var(--jiggle-max) * 1deg))
 }
 
 .shake {

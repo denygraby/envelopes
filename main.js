@@ -37,18 +37,51 @@ const categories = [
             "мне нравится, что ради меня ты готова идти вопреки своим устоям. со мной ты стала более раскрепощенная, ты сама захотела и научилась делать мне минет. ты сама инициируешь секс. это очень приятно, очень заводит.",
             "ты делаешь ахуенный минет. я прям каждый раз расплываюсь, но стараюсь это не показывать :)",
         ],
-    },
+    }
 ];
+
+setInterval(() => {
+    const envelope = document.querySelector('.main-envelope');
+    let jiggleMax = envelope.style.getPropertyValue('--jiggle-max');
+
+    jiggleMax *= -0.75;
+    if (Math.abs(jiggleMax) < 10) {
+        jiggleMax = 0;
+    }
+
+    envelope.style.setProperty('--jiggle-max', Math.floor(jiggleMax));
+}, 1000)
+$(document).on('click', '.main-envelope', (event) => {
+    let jiggleMax = +event.target.style.getPropertyValue('--jiggle-max');
+    jiggleMax ||= 10;
+    jiggleMax *= -1;
+
+    if (Math.abs(jiggleMax) > 75) {
+        event.target.style.setProperty('--jiggle-max', jiggleMax)
+        localStorage.setItem('main-opened', true);
+        event.target.classList.add('opened')
+        event.target.classList.remove('closed')
+    } else {
+        event.target.style.setProperty('--jiggle-max', Math.floor(jiggleMax * 1.1))
+    }
+
+    if (event.target.classList.contains('opened')) {
+        $('#main-envelope-modal').modal('show')
+    }
+});
+
 Vue.createApp({
     data() {
         return {
             categories: Vue.markRaw(categories),
             openedEnvelopes: {},
             selectedEnvelope: null,
+            mainOpened: false,
         };
     },
     mounted() {
         this.openedEnvelopes = JSON.parse(localStorage.getItem('opened-envelopes') ?? '{}');
+        this.mainOpened = JSON.parse(localStorage.getItem('main-opened') ?? 'false')
     },
     methods: {
         isOpened(category, envelopeIndex) {
@@ -88,4 +121,12 @@ Vue.createApp({
             return false;
         },
     },
-}).mount('body');
+    computed: {
+        allOpened() {
+            return Object
+                .values(this.openedEnvelopes)
+                .map(envelopes => Object.values(envelopes).length)
+                .reduce((carry, envelopes) => carry + envelopes, 0) >= 19;
+        },
+    },
+}).mount('#app');
