@@ -42,6 +42,8 @@ const categories = [
 
 setInterval(() => {
     const envelope = document.querySelector('.main-envelope');
+    if (!envelope) return;
+
     let jiggleMax = envelope.style.getPropertyValue('--jiggle-max');
 
     jiggleMax *= -0.75;
